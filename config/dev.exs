@@ -7,7 +7,7 @@ use Mix.Config
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
 config :nook_book, NookBookWeb.Endpoint,
-  http: [port: 4000],
+  http: [port: System.get_env("PORT") || 4000],
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
@@ -20,6 +20,10 @@ config :nook_book, NookBookWeb.Endpoint,
       cd: Path.expand("../assets", __DIR__)
     ]
   ]
+
+config :nook_book, cluster_role: System.get_env("CLUSTER_ROLE", "primary") |> String.to_atom()
+
+config :mnesia, :dir, 'mnesia/data' ++ '/' ++ (node() |> Atom.to_string() |> String.split("@") |> List.first |> String.to_charlist())
 
 # ## SSL Support
 #
