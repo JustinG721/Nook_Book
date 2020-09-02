@@ -10,10 +10,7 @@ defmodule NookBook.Data.Setup do
     create_tables()
   end
 
-  def create_tables() do
-    @tables
-    |> Enum.each(&create_table/1)
-  end
+  def create_tables(), do: Enum.each(@tables, &create_table/1)
 
   def create_table(module) do
     case table_exists?(module.table_name()) do
